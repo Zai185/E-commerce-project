@@ -1,0 +1,107 @@
+[
+    {
+        "id": 1,
+        "category": "Men's collection",
+        "items": [
+            {
+                "id": 1,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?",
+                "discount": 30
+            },
+            {
+                "id": 2,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?"
+            },
+            {
+                "id": 3,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?"
+            },
+            {
+                "id": 4,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?"
+            },
+            {
+                "id": 5,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?"
+            },
+            {
+                "id": 6,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?"
+            },
+            {
+                "id": 7,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?"
+            },
+            {
+                "id": 8,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?"
+            },
+            {
+                "id": 9,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?"
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "category": "Women's collection",
+        "items": [
+            {
+                "id": 1,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?",
+                "discount": 30
+            },
+            {
+                "id": 2,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?"
+            },
+            {
+                "id": 3,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?"
+            },
+            {
+                "id": 4,
+                "name": "TV Remote Control",
+                "price": 500,
+                "image_url": "https://pngfre.com/wp-content/uploads/tv-51-1024x758.png",
+                "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam?"
+            }
+        ]
+    }
+]

@@ -1,0 +1,1 @@
+export const useSubString = (description, limit) => description.substring(0, limit) + "..."
