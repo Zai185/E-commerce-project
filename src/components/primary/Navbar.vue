@@ -11,10 +11,14 @@
             <li><a href="">Lorem</a></li>
         </ul>
         <div class="hidden gap-4 md:flex">
-            <Button>
-                <RouterLink :to="{ name: 'signup' }">Login</RouterLink>
-            </Button>
-            <Button>Sign Up</Button>
+            <div v-if="!user.token" class="flex gap-4">
+                <Button>
+                    <RouterLink :to="{ name: 'signup' }">Sign Up</RouterLink>
+                </Button>
+                <Button>
+                    <RouterLink :to="{ name: 'login' }">Log In</RouterLink>
+                </Button>
+            </div>
             <Button @click="$router.push({ name: 'cart' })" class="relative">
                 <p
                     class="absolute w-6 h-6 translate-x-1/2 -translate-y-1/2 rounded-full top-1 right-1 bg-purple-950 z-index">
@@ -33,10 +37,14 @@
 <script setup>
 import Button from '@components/primary/Button.vue'
 import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@store/useAuthStore';
 import { useCartStore } from '@store/useCartStore';
 
 const cartStore = useCartStore()
+const authStore = useAuthStore()
+
 const { cartItems } = storeToRefs(cartStore)
+const { user } = storeToRefs(authStore)
 </script>
 
 <style lang="scss" scoped></style>

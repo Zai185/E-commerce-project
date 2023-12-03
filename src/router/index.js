@@ -6,7 +6,7 @@ const routes = [
     {
         path: '/',
         redirect: '/home',
-        meta: { isCustomer: true },
+        meta: { isGuest: true },
         component: () => import('@layouts/customer/GeneralLayout.vue'),
         children: [
             {
@@ -18,15 +18,16 @@ const routes = [
         ]
     },
     {
+        //^ for user authentication
         path: '/auth',
         redirect: '/signup',
         meta: { isGuest: true },
         component: () => import('@layouts/AuthLayout.vue'),
         children: [
-            { path: '/signup', component: () => import('@views/auth/Signup.vue'), name: 'signup' }
+            { path: '/signup', component: () => import('@views/auth/Signup.vue'), name: 'signup' },
+            { path: '/login', component: () => import('@views/auth/Login.vue'), name: 'login' },
         ]
     },
-
     {
         path: '/seller',
         redirect: '/seller/dashboard',
@@ -70,8 +71,10 @@ router.beforeEach((to, from, next) => {
     const authStore = useAuthStore()
     const { user } = storeToRefs(authStore)
 
-    if (to.meta.isCustomer && !user.value.token) {
+    if (to.meta.isCustomer && !user.token) {
         next({ name: 'signup' })
+    } else if (to.meta.isGuest && user.token) {
+        next({ name: 'home' })
     } else[
         next()
     ]
