@@ -11,7 +11,9 @@
             <li><a href="">Lorem</a></li>
         </ul>
         <div class="hidden gap-4 md:flex">
-            <Button>Login</Button>
+            <Button>
+                <RouterLink :to="{ name: 'signup' }">Login</RouterLink>
+            </Button>
             <Button>Sign Up</Button>
             <Button @click="$router.push({ name: 'cart' })" class="relative">
                 <p
