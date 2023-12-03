@@ -21,7 +21,7 @@ const routes = [
         //^ for user authentication
         path: '/auth',
         redirect: '/signup',
-        meta: { isGuest: true },
+        meta: { isNotAuthorized: true },
         component: () => import('@layouts/AuthLayout.vue'),
         children: [
             { path: '/signup', component: () => import('@views/auth/Signup.vue'), name: 'signup' },
@@ -71,13 +71,11 @@ router.beforeEach((to, from, next) => {
     const authStore = useAuthStore()
     const { user } = storeToRefs(authStore)
 
-    if (to.meta.isCustomer && !user.token) {
-        next({ name: 'signup' })
-    } else if (to.meta.isGuest && user.token) {
+    if (to.meta.isNotAuthorized && user.value.token) {
         next({ name: 'home' })
-    } else[
+    } else {
         next()
-    ]
+    }
 })
 
 export default router
