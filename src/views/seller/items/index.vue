@@ -51,14 +51,14 @@ import ImageContainer from '@components/ItemImageContainer.vue'
 import Button from '@components/primary/Button.vue'
 import { useItemStore } from '@store/useItemStore'
 
-const image = ref('')
+const image = ref('') // this is image url for show
 function updateImage(imageData) {
     image.value = imageData
 }
 const route = useRoute()
 const router = useRouter()
 const itemStore = useItemStore()
-const { addItem, getItem, editItem } = itemStore
+const { createItem, getItem, editItem } = itemStore
 
 const item = ref({
     name: '',
@@ -70,21 +70,19 @@ const item = ref({
 })
 
 async function saveItem() {
-    let item_id;
     if (!item.value.hasDiscount) {
         delete item.value.discount
         delete item.value.discountCurrency
     }
     if (image.value) {
-        item.value.image_url = image.value
+        if (item.value.image === image.value) return
+        item.value.image = image.value
     }
 
     if (!route.params.id) {
-        const response = await addItem(item.value)
-        // item_id = id
-
+        await createItem(item.value)
     } else {
-        const response = await editItem(route.params.id, item.value)
+        await editItem(route.params.id, item.value)
     }
     // router.push({ name: 'seller.item.edit', params: { id: item_id } })
     router.push({ name: 'seller' })
@@ -93,7 +91,15 @@ async function saveItem() {
 
 onMounted(async () => {
     if (route.params.id) {
-        item.value = await getItem(route.params.id)
+        await getItem(route.params.id)
+            .then(data => {
+                console.log(data)
+                item.value = data
+            })
+            .catch((error) => {
+                router.push({ name: 'NotFound' })
+            })
+
     }
 })
 
