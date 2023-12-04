@@ -3,7 +3,7 @@
         <h3 class="px-4 py-2 text-lg font-bold">
             {{ item.name }}
         </h3>
-        <img :src="item.image" :alt="item.image_url" class="object-cover w-full h-48 border-gray-600 border-y">
+        <img :src="item.image" :alt="item.image" class="object-cover w-full h-48 border-gray-600 border-y">
         <div class="flex flex-col justify-between px-4 py-2 h-28">
             <div>
                 <p class="text-xs font-medium">{{ useSubString(item.description, 58) }}</p>
@@ -45,8 +45,6 @@ async function deleteItem(id) {
         const response = await itemStore.deleteItem(id)
         emits('change')
     }
-
-
 }
 
 </script>

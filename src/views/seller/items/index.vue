@@ -1,6 +1,7 @@
 <template>
     <div>
-        <form class="w-1/2 min-w-[512px] mx-auto bg-white shadow-lg shadow-gray-800 rounded-lg p-8 mt-8">
+        <div v-if="loading">Loading...</div>
+        <form v-else class="w-1/2 min-w-[512px] mx-auto bg-white shadow-lg shadow-gray-800 rounded-lg p-8 mt-8">
             <div class="w-full">
                 <ImageContainer @updateImage="updateImage" />
                 <div class="flex flex-wrap mt-4">
@@ -47,17 +48,18 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import ImageContainer from '@components/ItemImageContainer.vue'
 import Button from '@components/primary/Button.vue'
 import { useItemStore } from '@store/useItemStore'
 
-const image = ref('') // this is image url for show
-function updateImage(imageData) {
-    image.value = imageData
-}
+//^ if this file exists, there is a new file
+const image_url = ref(null) // this is image url for show
+
 const route = useRoute()
 const router = useRouter()
 const itemStore = useItemStore()
+const { loading } = storeToRefs(itemStore)
 const { createItem, getItem, editItem } = itemStore
 
 const item = ref({
@@ -65,19 +67,27 @@ const item = ref({
     price: '',
     description: '',
     hasDiscount: false,
+    image: null,
     discount: null,
-    discountCurrency: '%'
 })
+
+function updateImage(imageData) {
+    image_url.value = imageData
+}
 
 async function saveItem() {
     if (!item.value.hasDiscount) {
         delete item.value.discount
         delete item.value.discountCurrency
     }
-    if (image.value) {
-        if (item.value.image === image.value) return
-        item.value.image = image.value
+
+    if (image_url.value) {
+        item.value.image = image_url.value
+    } else {
+        delete item.value.image
+
     }
+
 
     if (!route.params.id) {
         await createItem(item.value)
@@ -86,7 +96,6 @@ async function saveItem() {
     }
     // router.push({ name: 'seller.item.edit', params: { id: item_id } })
     router.push({ name: 'seller' })
-
 }
 
 onMounted(async () => {

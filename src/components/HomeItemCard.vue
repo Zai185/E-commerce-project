@@ -24,7 +24,6 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
 import Button from '@components/primary/Button.vue';
 import { storeToRefs } from 'pinia'
 import { useSubString } from '@composables/useSubString';
@@ -35,7 +34,6 @@ defineProps({
 })
 
 const cartStore = useCartStore()
-const { cartItems } = storeToRefs(cartStore)
 const { addCartItem, checkIncluded, editAmount, getCartItem } = cartStore
 
 function addToCart(item) {
