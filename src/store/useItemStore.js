@@ -27,8 +27,8 @@ export const useItemStore = defineStore('item', () => {
     async function getAllItems() {
         loading.value = true
         const response = await axiosClient.get('/items')
-        loading.value = false
         allItems.value = response.data
+        loading.value = false
         return response.data
     }
 
@@ -42,6 +42,7 @@ export const useItemStore = defineStore('item', () => {
     async function deleteItem(id) {
         loading.value = true
         await axiosClient.delete(`/items/${id}`)
+        await getAllItems() //^ refresh the items
         loading.value = false
     }
 

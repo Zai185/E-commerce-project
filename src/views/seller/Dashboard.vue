@@ -9,7 +9,7 @@
             </div>
             <div class="grid grid-cols-4 gap-4 mx-4">
                 <div v-for="item in allItems" :key="item.id">
-                    <ItemCard @change="refreshItems" :item="item" />
+                    <ItemCard :item="item" />
                 </div>
             </div>
         </div>
@@ -27,11 +27,10 @@ const itemStore = useItemStore()
 const { loading, allItems } = storeToRefs(itemStore)
 const { getAllItems } = itemStore
 
-function refreshItems() {
-    getAllItems()
-}
 
-refreshItems()
+onMounted(() => {
+    getAllItems()
+})
 </script>
 
 <style lang="scss" scoped></style>

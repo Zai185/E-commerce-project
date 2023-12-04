@@ -33,17 +33,15 @@
 import Button from '@components/primary/Button.vue';
 import { useSubString } from '@composables/useSubString.js';
 import { useItemStore } from '@store/useItemStore'
+
 defineProps({
     item: Object
 })
 
-const emits = defineEmits(['change'])
-
 const itemStore = useItemStore()
 async function deleteItem(id) {
     if (confirm("Are you sure you want to delete")) {
-        const response = await itemStore.deleteItem(id)
-        emits('change')
+        await itemStore.deleteItem(id)
     }
 }
 
