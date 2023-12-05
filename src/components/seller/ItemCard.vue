@@ -3,14 +3,16 @@
         <h3 class="px-4 py-2 text-lg font-bold">
             {{ item.name }}
         </h3>
-        <img :src="item.image" :alt="item.image" class="object-cover w-full h-48 border-gray-600 border-y">
+        <img :src="item.image" :alt="item.image" class="object-cover w-full h-48 border-gray-600 border-y" />
         <div class="flex flex-col justify-between px-4 py-2 h-28">
             <div>
                 <p class="text-xs font-medium">{{ useSubString(item.description, 58) }}</p>
                 <p class="font-bold">
-                    <span :class="[item.discount ? 'line-through text-gray-500 text-sm inline' : '']"> ${{ item.price
-                    }}</span>
-                    <span class="font-bold" v-if="item.discount"> ${{ item.price * (100 - item.discount) / 100 }} </span>
+                    <span :class="[item.discount ? 'line-through text-gray-500 text-sm inline' : '']">
+                        ${{ item.price }}</span>
+                    <span class="font-bold" v-if="item.discount">${{
+                        item.discount <= 80 ? (item.price * (100 - item.discount)) / 100 : item.price - item.discount }}
+                            </span>
                 </p>
             </div>
             <div class="flex gap-2">
@@ -30,21 +32,21 @@
 </template>
 
 <script setup>
-import Button from '@components/primary/Button.vue';
-import { useSubString } from '@composables/useSubString.js';
-import { useItemStore } from '@store/useItemStore'
+import Button from "@components/primary/Button.vue";
+import { useSubString } from "@composables/useSubString.js";
+import { useItemStore } from "@store/useItemStore";
 
 defineProps({
-    item: Object
-})
+    item: Object,
+});
 
-const itemStore = useItemStore()
+const itemStore = useItemStore();
+
 async function deleteItem(id) {
     if (confirm("Are you sure you want to delete")) {
-        await itemStore.deleteItem(id)
+        await itemStore.deleteItem(id);
     }
 }
-
 </script>
 
 <style lang="scss" scoped></style>

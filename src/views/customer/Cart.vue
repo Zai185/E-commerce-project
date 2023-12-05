@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="isLoading">Loading...</div>
+        <div v-if="loading">Loading...</div>
         <table v-else class="w-5/6 mx-auto mt-8">
             <tr class="text-left border ">
                 <th class="w-12 py-2 text-center border border-black">No</th>
@@ -9,30 +9,22 @@
                 <th class="px-2 py-2 border border-black ">Price</th>
                 <th class="px-2 py-2 border border-black ">Total</th>
             </tr>
-            <tr v-for="(item, index) in   cartItems  " :key="item.id" class="border">
+            <tr v-for="(item, index) in cartItems" :key="item.id" class="border">
                 <td class="px-2 py-2 border border-black">{{ index + 1 }}</td>
-                <td class="px-2 py-2 border border-black">{{ itemName(item.id).name }} </td>
+                <td class="px-2 py-2 border border-black">{{ item.name }}</td>
                 <td class="px-2 py-2 border border-black">
-                    <div class="flex items-center">
-                        <p class="inline-block w-8 text-center">{{ item.amount }}</p>
-                        <Button @click="editAmount('+', item.id)">+</Button>
-                        <Button @click="reduceAmount(item.id)"
-                            :class="{ 'bg-red-800 hover:bg-red-950': item.amount === 1 }">
-                            <TrashIcon v-if="item.amount === 1" class="h-7" />
-                            <p v-else>-</p>
-
-                        </Button>
-                    </div>
+                    <select @change="editAmount(item.id, item.amount)" v-model="item.amount"
+                        class="w-full py-0 bg-blue-100">
+                        <option value="0">0 (delete)</option>
+                        <option v-for="i in 9" :value="i">{{ i }}</option>
+                    </select>
                 </td>
-                <td class="px-2 py-2 border border-black">{{ itemName(item.id).price }}</td>
-                <td class="px-2 py-2 border border-black">{{ totalForEach(item) }}</td>
+                <td class="px-2 py-2 border border-black">{{ item.price }}</td>
+                <td class="px-2 py-2 border border-black">{{ item.amount * item.price }}</td>
             </tr>
             <tr class="text-left">
-                <td class="py-2 text-center border border-black"></td>
+                <td class="px-2 py-2 font-bold text-right border border-black" colspan="4">Total</td>
                 <td class="px-2 py-2 border border-black"></td>
-                <td class="px-2 py-2 border border-black"></td>
-                <td class="px-2 py-2 font-bold border border-black">Total</td>
-                <td class="px-2 py-2 font-bold border border-black">{{ totalAmount() }}</td>
             </tr>
         </table>
     </div>
@@ -41,49 +33,40 @@
 <script setup>
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useItemStore } from '@store/useItemStore'
 import { useCartStore } from '@store/useCartStore'
-import Button from '@components/primary/Button.vue'
-import TrashIcon from '@/assets/icons/TrashIcon.vue'
 
-const itemStore = useItemStore()
 const cartStore = useCartStore()
-
-const { items } = storeToRefs(itemStore)
-const { cartItems } = storeToRefs(cartStore)
-const { editAmount, getCartItem, deleteCartItem } = cartStore
-
-const isLoading = ref(true)
-
-itemStore.getAllItems()
-    .then(() => {
-        isLoading.value = false
-    })
+// const { items } = storeToRefs(itemStore)
+const { loading, cartItems } = storeToRefs(cartStore)
+const { editAmount, getCartItems, deleteCartItem } = cartStore
+console.log(cartItems.value)
 
 //^ functions
-function itemName(id) {
-    const index = items.value.findIndex(item => item.id === id)
-    return items.value[index]
-}
+// function itemName(id) {
+//     const index = items.value.findIndex(item => item.id === id)
+//     return items.value[index]
+// }
 
-function totalForEach({ id, amount }) {
-    return itemName(id).price * amount
-}
+// function totalForEach({ id, amount }) {
+//     return itemName(id).price * amount
+// }
 
-function totalAmount() {
-    let total = 0
-    cartItems.value.forEach(item => {
-        total += totalForEach(item)
-    })
-    return total
-}
+// function totalAmount() {
+//     let total = 0
+//     cartItems.value.forEach(item => {
+//         total += totalForEach(item)
+//     })
+//     return total
+// }
 
-async function reduceAmount(id) {
-    const item = await getCartItem(id)
-    item.amount === 1
-        ? deleteCartItem(id)
-        : editAmount('-', id)
-}
+// async function reduceAmount(id) {
+//     const item = await getCartItem(id)
+//     item.amount === 1
+//         ? deleteCartItem(id)
+//         : editAmount('-', id)
+// }
+
+getCartItems()
 </script>
 
 <style lang="scss" scoped></style>

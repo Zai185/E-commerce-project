@@ -1,51 +1,45 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import axiosClient from '../axios'
 
 export const useCartStore = defineStore('cart', () => {
-    const cartItems = ref(JSON.parse(localStorage.getItem('CART_ITEM')) || [])
-    const cartIds = ref(JSON.parse(localStorage.getItem('CART_ITEMS_ID')) || [])
+    const cartItems = ref([])
+    const loading = ref(false)
+    const tempLoading = ref(false)
 
-    function addCartItem(id) {
-        if (checkIncluded(id)) return
-        cartIds.value.push(id)
-        cartItems.value.push({ id, amount: 1 })
-        refreshCartItems()
+    async function addCartItem(item_id) {
+        loading.value = true
+        const response = await axiosClient.post('/carts', { item_id: item_id })
+        cartItems.value = [...cartItems.value, response.data]
+        loading.value = false
+        return response.data
     }
 
-    function checkIncluded(id) {
-        return cartIds.value.includes(id)
+    async function getCartItems(id) {
+        loading.value = true
+        const response = await axiosClient.get(`/carts`);
+        cartItems.value = response.data
+        loading.value = false
+        return response.data
     }
 
-    function getCartItem(id) {
-        const index = cartItems.value.findIndex(item => item.id === id)
-        return cartItems.value[index]
+    async function editAmount(id, amount) {
+        const response = await axiosClient.put(`/carts/${id}`, { amount })
+        cartItems.value = cartItems.value.map(item => {
+            if (item.id === response.data.id) {
+                return response.data
+            }
+            return item
+        })
+        return response.data
     }
 
-    function editAmount(op, id) {
-        const item = getCartItem(id)
-        switch (op) {
-            case '+':
-                item.amount++
-                break
-            case '-':
-                if (item.amount < 1) break
-                item.amount--
-                break
-        }
-        refreshCartItems()
-    }
     function deleteCartItem(id) {
         if (!confirm("Are you sure you want to delete")) return
         cartItems.value = cartItems.value.filter(item => item.id !== id)
-        cartIds.value = cartIds.value.filter(i => i !== id)
-        refreshCartItems()
-    }
-
-    function refreshCartItems() {
-        localStorage.setItem('CART_ITEM', JSON.stringify(cartItems.value))
-        localStorage.setItem('CART_ITEMS_ID', JSON.stringify(cartIds.value))
     }
 
 
-    return { cartItems, addCartItem, checkIncluded, editAmount, getCartItem, deleteCartItem }
+
+    return { loading, tempLoading, cartItems, addCartItem, editAmount, getCartItems, deleteCartItem }
 })

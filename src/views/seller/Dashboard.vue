@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import Button from '@components/primary/Button.vue';
 import { storeToRefs } from 'pinia'
 import { useItemStore } from '@store/useItemStore'

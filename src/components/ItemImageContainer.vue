@@ -42,7 +42,7 @@ const { getItem } = itemStore
 
 function fileChange(e) {
     const file = e.target.files[0]
-    const maxSize = 1 * 1024 * 1024
+    const maxSize = 3 * 1024 * 1024
     if (file) {
 
         if (file.size > maxSize) {
