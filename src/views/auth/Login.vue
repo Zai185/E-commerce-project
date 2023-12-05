@@ -13,7 +13,9 @@
                         placeholder="Password" v-model="user.password" required />
 
                     <Button type="submit" class="block mx-auto">Create Account</Button>
-
+                    <p class="text-center text-blue-800 ">
+                        <RouterLink :to="{ name: 'signup' }">Already have an account? Sign Up</RouterLink>
+                    </p>
                     <div class="mt-4 text-sm text-center text-grey-dark">
                         By signing up, you agree to the
                         <a class="no-underline border-b border-grey-dark text-grey-dark" href="#">

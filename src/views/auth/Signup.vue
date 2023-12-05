@@ -18,8 +18,10 @@
                     <input type="password" class="block w-full p-3 mb-4 border rounded border-grey-light"
                         name="confirm_password" placeholder="Confirm Password" v-model="user.password_confirmation"
                         required />
-
                     <Button type="submit" class="block mx-auto">Create Account</Button>
+                    <p class="text-center text-blue-800 ">
+                        <RouterLink :to="{ name: 'login' }">Already have an account? Login</RouterLink>
+                    </p>
 
                     <div class="mt-4 text-sm text-center text-grey-dark">
                         By signing up, you agree to the
