@@ -6,6 +6,13 @@ export const useCartStore = defineStore('cart', () => {
     const cartItems = ref([])
     const loading = ref(false)
     const tempLoading = ref(false)
+    const getTotal = computed(() => {
+        var total = 0;
+        cartItems.value.forEach(i => {
+            total += i.price * i.amount
+        })
+        return total
+    })
 
     async function addCartItem(item_id) {
         loading.value = true
@@ -35,11 +42,11 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     function deleteCartItem(id) {
-        if (!confirm("Are you sure you want to delete")) return
         cartItems.value = cartItems.value.filter(item => item.id !== id)
+        axiosClient.delete(`/carts/${id}`)
     }
 
 
 
-    return { loading, tempLoading, cartItems, addCartItem, editAmount, getCartItems, deleteCartItem }
+    return { loading, tempLoading, cartItems, getTotal, addCartItem, editAmount, getCartItems, deleteCartItem }
 })

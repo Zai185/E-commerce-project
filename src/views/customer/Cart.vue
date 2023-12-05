@@ -13,7 +13,7 @@
                 <td class="px-2 py-2 border border-black">{{ index + 1 }}</td>
                 <td class="px-2 py-2 border border-black">{{ item.name }}</td>
                 <td class="px-2 py-2 border border-black">
-                    <select @change="editAmount(item.id, item.amount)" v-model="item.amount"
+                    <select @change="cartItemChange(item.id, item.amount)" v-model="item.amount"
                         class="w-full py-0 bg-blue-100">
                         <option value="0">0 (delete)</option>
                         <option v-for="i in 9" :value="i">{{ i }}</option>
@@ -24,7 +24,7 @@
             </tr>
             <tr class="text-left">
                 <td class="px-2 py-2 font-bold text-right border border-black" colspan="4">Total</td>
-                <td class="px-2 py-2 border border-black"></td>
+                <td class="px-2 py-2 border border-black">{{ getTotal }}</td>
             </tr>
         </table>
     </div>
@@ -36,36 +36,16 @@ import { storeToRefs } from 'pinia'
 import { useCartStore } from '@store/useCartStore'
 
 const cartStore = useCartStore()
-// const { items } = storeToRefs(itemStore)
 const { loading, cartItems } = storeToRefs(cartStore)
-const { editAmount, getCartItems, deleteCartItem } = cartStore
-console.log(cartItems.value)
+const { getTotal, editAmount, getCartItems, deleteCartItem } = cartStore
 
-//^ functions
-// function itemName(id) {
-//     const index = items.value.findIndex(item => item.id === id)
-//     return items.value[index]
-// }
-
-// function totalForEach({ id, amount }) {
-//     return itemName(id).price * amount
-// }
-
-// function totalAmount() {
-//     let total = 0
-//     cartItems.value.forEach(item => {
-//         total += totalForEach(item)
-//     })
-//     return total
-// }
-
-// async function reduceAmount(id) {
-//     const item = await getCartItem(id)
-//     item.amount === 1
-//         ? deleteCartItem(id)
-//         : editAmount('-', id)
-// }
-
+function cartItemChange(cart_id, amount) {
+    if (amount == 0) {
+        deleteCartItem(cart_id)
+        return
+    }
+    editAmount(cart_id, amount)
+}
 getCartItems()
 </script>
 
