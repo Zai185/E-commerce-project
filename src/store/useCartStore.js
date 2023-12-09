@@ -6,6 +6,7 @@ export const useCartStore = defineStore('cart', () => {
     const cartItems = ref([])
     const loading = ref(false)
     const tempLoading = ref(false)
+
     const getTotal = computed(() => {
         var total = 0;
         cartItems.value.forEach(i => {

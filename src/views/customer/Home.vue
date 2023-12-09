@@ -13,7 +13,6 @@
 </template>
 
 <script setup>
-import CategorizedRow from '@components/HomeCategorizedRow.vue';
 import ItemCard from '@components/HomeItemCard.vue';
 import { storeToRefs } from 'pinia'
 import { useItemStore } from '@store/useItemStore'

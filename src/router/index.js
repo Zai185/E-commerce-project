@@ -32,7 +32,7 @@ const routes = [
         path: '/seller',
         redirect: '/seller/dashboard',
         name: 'seller',
-        meta: { isSeller: true, isCustomer: true },
+        meta: { isSeller: true },
         component: () => import('@layouts/seller/Layout.vue'),
         children: [
             {
@@ -56,7 +56,7 @@ const routes = [
         path: '/:pathMatch(.*)*',
         component: () => import('@views/NotFound.vue'),
         name: 'NotFound'
-    }
+    },
 ]
 
 const router = createRouter({

@@ -12,7 +12,7 @@
                     <input type="password" class="block w-full p-3 mb-4 border rounded border-grey-light"
                         placeholder="Password" v-model="user.password" required />
 
-                    <Button type="submit" class="block mx-auto">Create Account</Button>
+                    <Button type="submit" class="block mx-auto">Log In</Button>
                     <p class="text-center text-blue-800 ">
                         <RouterLink :to="{ name: 'signup' }">Already have an account? Sign Up</RouterLink>
                     </p>

@@ -8,7 +8,7 @@
             <p class="text-xs font-medium">{{ useSubString(item.description, 58) }}</p>
             <div>
                 <p class="font-bold">
-                    <span :class="[item.discount ? 'line-through text-gray-500 text-sm inline text-xs' : '']"> ${{
+                    <span :class="[item.discount ? 'line-through text-gray-500 inline text-xs' : '']"> ${{
                         item.price
                     }}</span>
                     <span class="font-bold" v-if="item.discount"> ${{ item.discount <= 80 ? (item.price * (100 -
@@ -56,12 +56,6 @@ const isIncluded = computed(() => { //^ check if included, return ture if exists
     return cItemIds.includes(item.id)
 })
 
-// function cartById() { //^ return the cart item by item_id
-//     console.log(cartItems.value)
-//     var dummy = cartItems.value.filter(cItem => cItem.item_id === item.id)
-//     return dummy[0]
-// }
-
 async function addToCart(item) { //^ add to cart @para -> item
     if (!user.value.token) {
         router.push({ name: 'signup' })
@@ -79,20 +73,28 @@ async function changeAmount() {
     currentLoading.value = false
 }
 
-getCartItems() //* get cart items on creating
-    .then(() => {
-        currentCartItem.value = cartItems.value.filter(i => i.item_id === item.id)[0]
-        if (currentCartItem.value) {
-            currentAmount.value = currentCartItem.value.amount
-        }
-        currentLoading.value = false
-    })
-    .catch(error => {
-        if (error.response.status === 401) //^ unauthorized/ not login
-        {
+function getCItems() {
+    getCartItems() //* get cart items on creating
+        .then(() => {
+            currentCartItem.value = cartItems.value.filter(i => i.item_id === item.id)[0]
+            if (currentCartItem.value) {
+                currentAmount.value = currentCartItem.value.amount
+            }
             currentLoading.value = false
-        }
-    })
+        })
+        .catch(error => {
+            if (error.response.status === 401) //^ unauthorized/ not login
+            {
+                currentLoading.value = false
+            }
+        })
+}
+
+onMounted(() => {
+    if (user.value.token) {
+        getCItems()
+    }
+})
 </script>
 
 <style lang="scss" scoped></style>
